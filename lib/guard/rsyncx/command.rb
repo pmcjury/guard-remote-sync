@@ -12,6 +12,7 @@ module Guard
       end
 
       def sync
+        UI.info "Guard::RsyncX `#{@command}`"
         `#{@command}`
       end
 
@@ -20,6 +21,7 @@ module Guard
         test_command = build_command
         @options[:dry_run] = false
         `#{test_command}`
+        $?.exitstatus
       end
 
       private
@@ -29,7 +31,7 @@ module Guard
           UI.info "':cli' option was given so ignoring all other options, and outputting as is..."
           command = "#{rsync_command} #{@options[:cli_options]}"
         else
-          UI.info "building rsync options from specified options"
+          UI.debug "building rsync options from specified options"
           @command_options = build_options
           @remote_options = check_remote_options
           destination = @remote_options.nil? ? "#{@destination.directory}" : "#{@remote_options}:#{@destination.directory}"

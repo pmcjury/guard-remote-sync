@@ -1,5 +1,5 @@
 module Guard
-  module RsyncX
+  module RsyncXVersion
       VERSION = "0.0.1"
   end
 end

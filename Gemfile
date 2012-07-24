@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 gemspec
 
-gem "rake"
+gem "rake", "~> 0.9.2.2"
 gem "rspec"       # for rspec-core, rspec-expectations, rspec-mocks
 gem "rspec-mocks" # for rspec-mocks only
 

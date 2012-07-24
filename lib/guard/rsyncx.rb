@@ -7,7 +7,7 @@ module Guard
     autoload :Command, 'guard/rsyncx/command'
     autoload :Source,  'guard/rsyncx/source'
 
-    :attr_accessor
+    attr_accessor :command
 
     # Initialize a Guard.
     # @param [Array<Guard::Watcher>] watchers the Guard file watchers
@@ -73,6 +73,7 @@ module Guard
     # @param [Array<String>] paths the changes files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_changes(paths)
+      #paths.each do |p| ::Guard::UI.info("Files effect : #{p}")  end
       @command.sync
     end
 
