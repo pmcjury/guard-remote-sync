@@ -147,4 +147,27 @@ describe Guard::RsyncX::Command do
     end
 
   end
+
+  describe "#sync" do
+    let(:source) do
+      Guard::RsyncX::Source.new("./source")
+    end
+    let(:destination) do
+      Guard::RsyncX::Source.new("/remote/destination")
+    end
+
+    context "some options are passed to initialize" do
+      it "should send the rsync command to the system" do
+        command = Guard::RsyncX::Command.new(source, destination, {
+                    :user => "test",
+                    :remote_address => "192.168.1.1",
+                    :archive => true,
+                    :recursive => true
+                })
+
+        command.should_receive(:`).with("rsync -ar ./source test@192.168.1.1:/remote/destination")
+        command.sync
+      end
+    end
+  end
 end
