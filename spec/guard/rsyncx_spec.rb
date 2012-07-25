@@ -7,51 +7,57 @@ describe Guard::RsyncX do
   end
 
   describe "#initialize" do
-    #subject { described_class.new }
-    context "when no :source option is given" do
-      it should raise_error do
-        expect { described_class.new }.to raise_error(StandardError)
-      end
-    end
 
-    context "when no :destination option is given" do
-      it "should raise error" do
-        expect { described_class.new }.to raise_error(StandardError)
-      end
-    end
-
-    context "when :source and :destination options are given" do
-      subject { guard }
-      let(:guard) do
-        Guard::RsyncX.new(nil, {
-            :source => "./source",
-            :destination => "./destination"
-        })
-      end
-
-      it { should_not be_nil }
-      specify { subject.should_not be_nil }
-
-    end
   end
 
   describe "#start" do
 
-    let(:source) do
-      "./source"
+    context "when no :source option is given" do
+      it "should send an error notification and stop" do
+        ::Guard::UI.should_receive(:error)
+        expect {
+          guard = described_class.new(nil, {:destination => "."})
+          guard.start
+        }.to raise_exception
+      end
     end
-    let(:destination) do
-      "/remote/destination"
+
+    context "when no :destination option is given" do
+      it "should send an error notification and stop" do
+        ::Guard::UI.should_receive(:error)
+        expect {
+          guard = described_class.new(nil, {:source => "."})
+          guard.start
+        }.to raise_exception
+      end
+    end
+
+    context "when no :source and no :destination options are given" do
+      it "should send 2 error notification and stop" do
+        ::Guard::UI.should_receive(:error).at_least 2
+        expect {
+          guard = described_class.new(nil, {})
+          guard.start
+        }.to raise_exception
+      end
+
     end
 
     context "when starting rsync guard" do
+      let(:source) do
+        "./source"
+      end
+      let(:destination) do
+        "/remote/destination"
+      end
       it "should call the UI::info with the following message" do
-        ::Guard::UI.should_receive(:info).with("Guard::RsyncX is running in source directory #{source}!")
+        File.stub!(:expand_path).and_return(source)
+        ::Guard::UI.should_receive(:info).with("Guard::RsyncX started in source directory '#{source}'")
         guard = described_class.new(nil, {:source => source, :destination => destination})
         guard.start
       end
 
-      it "should call rsync on the system when :sync_on_start is true and command#test" do
+      it "should call command#sync on the system when :sync_on_start is true and command#test is true" do
         guard = described_class.new(nil, {:source => source, :destination => destination, :sync_on_start => true})
         guard.command.stub!(:test).and_return(true)
         guard.command.should_receive(:sync).once
@@ -69,7 +75,7 @@ describe Guard::RsyncX do
     describe "#stop" do
       context "when the guard is stopped" do
         it "should output the following message" do
-          ::Guard::UI.should_receive(:info).with("Guard::RsyncX is stopped in source directory ./source!")
+          ::Guard::UI.should_receive(:info).with("Guard::RsyncX stopped.")
           guard.stop
         end
       end

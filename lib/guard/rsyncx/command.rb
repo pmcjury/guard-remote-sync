@@ -13,7 +13,8 @@ module Guard
 
       def sync
         UI.info "Guard::RsyncX `#{@command}`"
-        `#{@command}`
+        r = `#{@command}`
+        UI.info "Guard::RsyncX Status : \n #{r}" if @options[:verbose]
       end
 
       def test
@@ -49,11 +50,11 @@ module Guard
         end
         opts.concat "-#{simple_opts} " unless simple_opts.empty?
 
-        [:progress, :delete, :stats, :dry_run].each do |o|
+        [:progress, :delete, :stats, :dry_run, :cvs_exclude].each do |o|
           value = check_boolean_option(o)
           opts.concat "#{value} " unless value.nil?
         end
-        [:include, :include_from, :exclude, :exclude_from].each do |o|
+        [:include, :include_from, :exclude, :exclude_from, :password_file].each do |o|
           value = check_nil_option(o)
           opts.concat "#{value} " unless value.nil?
         end
