@@ -21,7 +21,9 @@ module Guard
         @options[:dry_run] = true
         test_command = build_command
         @options[:dry_run] = false
+        $stdout.sync = true
         `#{test_command}`
+        $stdout.sync = false
         $?.exitstatus
       end
 
