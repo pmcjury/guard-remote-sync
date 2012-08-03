@@ -1,7 +1,14 @@
 #Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
 
 ## Install
+
 Please be sure to have [Guard](https://github.com/guard/guard) installed before continuing.
+
+Please be sure to have the rsync command in your path.
+
+It's recommended that you set up a ssh key if you're going to do remote syncing. 
+Alterantively your can use a password file as per rsync default option --password-file=FILE, the drawback with this is you might commit your information to the repo, and that ain't no good.
+Lastly, you can just type in your password everytime, but that's too much work. Add a ssh key! 
 
 Install the gem:
 
@@ -43,7 +50,7 @@ Please read [Guard doc](https://github.com/guard/guard#readme) for more informat
 ### There are only two required options
 
 ```ruby
-guard 'remote-sync', :source => ".", :destination => "./tmp" do
+guard 'remote-sync', :source => '.', :destination => './tmp' do
         # ...
 end
 ```
@@ -52,9 +59,9 @@ end
 ```ruby
 guard 'remote-sync', 
         :source => "."                      # the directory to start the remote sync guard in
-        :destination => "/export/home/user" # the directory to sync to
+        :destination => '/export/home/user' # the directory to sync to
         :user => "someone"                  # the user to user ex: {USER}@somehost.com
-        :remote_address => "company.com"    # the remote address ip or url
+        :remote_address => 'company.com'    # the remote address ip or url
         do
                 # ...
 end
@@ -62,7 +69,7 @@ end
 
 ### Using your own rsync command. This bypasses all validations, etc.
 ```ruby
-guard 'remote-sync', :cli_options => "rsync -Carv . user@company.com:/export/home/user do
+guard 'remote-sync', :cli_options => 'rsync -Carv . user@company.com:/export/home/user' do
         # ...
 end
 ```
