@@ -1,4 +1,4 @@
-guard-rsync-remote
+guard-remote-sync
 ============
 
 **Usage**
@@ -7,8 +7,8 @@ bundle exec guard
 ```
 
 **Example Guardfile**
-```
-guard 'rsync-remote',
+```ruby
+guard 'remote-sync',
         :source => ".", 
         :destination => '/export/home/{username}/tmp', 
         :user => '{user}',
@@ -20,5 +20,3 @@ guard 'rsync-remote',
   watch(%r{^.+\.(js|xml|php|class|config)$})
 end
 ```
-
-A more extensive and tested rsync guard
