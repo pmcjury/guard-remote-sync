@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Guard-remote-sync by pmcjury</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Guard-remote-sync</h1>
+          <h2>A more extensive and tested rsync guard</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/pmcjury/guard-remote-sync/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/pmcjury/guard-remote-sync/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/pmcjury/guard-remote-sync" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>Guard::RemoteSync <a href="http://travis-ci.org/pmcjury/guard-remote-sync"><img src="https://secure.travis-ci.org/pmcjury/guard-remote-sync.png" alt="Build Status"></a>
+</h1>
+
+<h2>Install</h2>
+
+<p>Please be sure to have <a href="https://github.com/guard/guard">Guard</a> installed before continuing.</p>
+
+<p>Please be sure to have the rsync command in your path.</p>
+
+<p>It's recommended that you set up a ssh key if you're going to do remote syncing. 
+Alterantively your can use a password file as per rsync default option --password-file=FILE, the drawback with this is you might commit your information to the repo, and that ain't no good.
+Lastly, you can just type in your password everytime, but that's too much work. Add a ssh key! </p>
+
+<p>Install the gem:</p>
+
+<pre><code>$ gem install guard-remote-sync
+</code></pre>
+
+<p>Add guard definition to your Guardfile by running this command:</p>
+
+<pre><code>$ guard init remote-sync
+</code></pre>
+
+<h2>Usage</h2>
+
+<p>Please read <a href="https://github.com/guard/guard#readme">Guard usage doc</a></p>
+
+<h2>Guardfile</h2>
+
+<h3>Any directory you need to rsync</h3>
+
+<div class="highlight"><pre><span class="n">guard</span> <span class="s1">'remote-sync'</span><span class="p">,</span>
+        <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="s2">"."</span><span class="p">,</span> 
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s1">'/export/home/{username}/tmp'</span><span class="p">,</span> 
+        <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s1">'{user}'</span><span class="p">,</span>
+        <span class="ss">:remote_address</span> <span class="o">=&gt;</span> <span class="s1">'{address}'</span><span class="p">,</span>
+        <span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> 
+        <span class="ss">:cli</span> <span class="o">=&gt;</span> <span class="s2">"--color"</span><span class="p">,</span> 
+        <span class="ss">:sync_on_start</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="k">do</span>
+
+  <span class="n">watch</span><span class="p">(</span><span class="sr">%r{^.+\.(js|xml|php|class|config)$}</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>Please read <a href="https://github.com/guard/guard#readme">Guard doc</a> for more information about the Guardfile DSL.</p>
+
+<h2>Options</h2>
+
+<h3>There are only two required options</h3>
+
+<div class="highlight"><pre><span class="n">guard</span> <span class="s1">'remote-sync'</span><span class="p">,</span> <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="s1">'.'</span><span class="p">,</span> <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s1">'./tmp'</span> <span class="k">do</span>
+        <span class="c1"># ...</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>Syncing to a remote machine required additional options</h3>
+
+<div class="highlight"><pre><span class="n">guard</span> <span class="s1">'remote-sync'</span><span class="p">,</span> 
+        <span class="ss">:source</span> <span class="o">=&gt;</span> <span class="s2">"."</span>                      <span class="c1"># the directory to start the remote sync guard in</span>
+        <span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="s1">'/export/home/user'</span> <span class="c1"># the directory to sync to</span>
+        <span class="ss">:user</span> <span class="o">=&gt;</span> <span class="s2">"someone"</span>                  <span class="c1"># the user to user ex: {USER}@somehost.com</span>
+        <span class="ss">:remote_address</span> <span class="o">=&gt;</span> <span class="s1">'company.com'</span>    <span class="c1"># the remote address ip or url</span>
+        <span class="k">do</span>
+                <span class="c1"># ...</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>Using your own rsync command. This bypasses all validations, etc.</h3>
+
+<div class="highlight"><pre><span class="n">guard</span> <span class="s1">'remote-sync'</span><span class="p">,</span> <span class="ss">:cli_options</span> <span class="o">=&gt;</span> <span class="s1">'rsync -Carv . user@company.com:/export/home/user'</span> <span class="k">do</span>
+        <span class="c1"># ...</span>
+<span class="k">end</span>
+</pre></div>
+
+<h3>List of available options:</h3>
+
+<p>Most of these options are human readable and correspond to rsync's options. Long options are used wherever
+possible to be more verbose</p>
+
+<div class="highlight"><pre><span class="ss">:source</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                      <span class="c1"># the source directory to start in</span>
+<span class="ss">:destination</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                 <span class="c1"># the directory to sync to</span>
+<span class="ss">:user</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                        <span class="c1"># the user to use if remote syncing to another machine</span>
+<span class="ss">:remote_address</span> <span class="o">=&gt;</span> <span class="kp">nil</span>              <span class="c1"># the remote address to the other machine ip|url</span>
+<span class="ss">:ssh</span> <span class="o">=&gt;</span> <span class="kp">false</span>                       <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:cli_options</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                 <span class="c1"># used if you want to pass your own rsyn command</span>
+<span class="ss">:archive</span> <span class="o">=&gt;</span> <span class="kp">true</span>                    <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:recursive</span> <span class="o">=&gt;</span> <span class="kp">true</span>                  <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:verbose</span> <span class="o">=&gt;</span> <span class="kp">true</span>                    <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:delete</span> <span class="o">=&gt;</span> <span class="kp">true</span>                     <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:include</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                     <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:include_from</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:exclude</span> <span class="o">=&gt;</span> <span class="kp">nil</span>                     <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:exclude_from</span> <span class="o">=&gt;</span> <span class="s2">".rsync-filter"</span>    <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:progress</span> <span class="o">=&gt;</span> <span class="kp">true</span>                   <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:sync_on_start</span> <span class="o">=&gt;</span> <span class="kp">false</span>             <span class="c1"># rsycn when the guard starts instead of waiting for a watcher to trigger guard</span>
+<span class="ss">:dry_run</span> <span class="o">=&gt;</span> <span class="kp">false</span>                   <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:cvs_exclude</span> <span class="o">=&gt;</span> <span class="kp">true</span>                <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:password_file</span> <span class="o">=&gt;</span> <span class="kp">nil</span>               <span class="c1"># see rsync options : "$ man rsync"</span>
+<span class="ss">:timeout</span> <span class="o">=&gt;</span> <span class="mi">10</span>                      <span class="c1"># see rsync options : "$ man rsync"</span>
+</pre></div>
+
+<h2>Development</h2>
+
+<ul>
+<li>Source hosted at <a href="https://github.com/pmcjury/guard-remote-sync">GitHub</a>
+</li>
+<li>Report issues/Questions/Feature requests on <a href="https://github.com/pmcjury/guard-remote-sync/issues">GitHub Issues</a>
+</li>
+</ul><h2>Testing</h2>
+
+<p>Please run <code>bundle exec rake spec</code> to test the source</p>
+
+<h2>Author</h2>
+
+<p><a href="https://github.com/pmcjury">Patrick H. McJury</a></p>
+        </section>
+
+        <footer>
+          Guard-remote-sync is maintained by <a href="https://github.com/pmcjury">pmcjury</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
