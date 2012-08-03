@@ -19,7 +19,7 @@ $ gem install guard-remote-sync
 Add guard definition to your Guardfile by running this command:
 
 ```
-$ guard init rspec
+$ guard init remote-sync
 ```
 
 ## Usage
