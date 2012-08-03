@@ -1,7 +1,7 @@
 #Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
 
 ## Install
-Please be sure to have [Guard](https://github.com/guard/guard) installed before continue.
+Please be sure to have [Guard](https://github.com/guard/guard) installed before continuing.
 
 Install the gem:
 
@@ -20,8 +20,6 @@ $ guard init rspec
 Please read [Guard usage doc](https://github.com/guard/guard#readme)
 
 ## Guardfile
-
-RSpec guard can be really adapted to all kind of projects.
 
 ### Any directory you need to rsync
 
@@ -54,7 +52,7 @@ end
 ```ruby
 guard 'remote-sync', 
         :source => "."                      # the directory to start the remote sync guard in
-        :destination => "/export/home/user  # the directory to sync to
+        :destination => "/export/home/user" # the directory to sync to
         :user => "someone"                  # the user to user ex: {USER}@somehost.com
         :remote_address => "company.com"    # the remote address ip or url
         do
@@ -100,13 +98,13 @@ possible to be more verbose
 Development
 -----------
 
-Pull requests are very welcome! Make sure your patches are well tested. Please create a topic branch for every separate change
-you make.
+* Source hosted at [GitHub](https://github.com/pmcjury/guard-remote-sync)
+* Report issues/Questions/Feature requests on [GitHub Issues](https://github.com/pmcjury/guard-remote-sync/issues)
 
 Testing
 -------
 
-Please run `bundle exec rake spec`
+Please run `bundle exec rake spec` to test the source
 
 Author
 ------
