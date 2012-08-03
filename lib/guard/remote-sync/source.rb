@@ -1,5 +1,5 @@
 module Guard
-  class RsyncX
+  class RemoteSync
     class Source
 
       attr_accessor :directory

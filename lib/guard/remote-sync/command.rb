@@ -1,5 +1,5 @@
 module Guard
-  class RsyncX
+  class RemoteSync
     class Command
 
       attr_accessor :command, :source, :destination
@@ -12,9 +12,9 @@ module Guard
       end
 
       def sync
-        UI.info "Guard::RsyncX `#{@command}`"
+        UI.info "Guard::RemoteSync `#{@command}`"
         r = `#{@command}`
-        UI.info "Guard::RsyncX Status : \n #{r}" if @options[:verbose]
+        UI.info "Guard::RemoteSync Status : \n #{r}" if @options[:verbose]
       end
 
       def test

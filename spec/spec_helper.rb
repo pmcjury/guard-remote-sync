@@ -1,8 +1,8 @@
 require 'rspec'
 
-require 'guard/rsyncx'
-require 'guard/rsyncx/command'
-require 'guard/rsyncx/source'
+require 'guard/remote-sync'
+require 'guard/remote-sync/command'
+require 'guard/remote-sync/source'
 
 include RSpec::Matchers
 

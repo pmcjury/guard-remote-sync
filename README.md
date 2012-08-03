@@ -1,4 +1,4 @@
-guard-rsyncx
+guard-rsync-remote
 ============
 
 **Usage**
@@ -8,7 +8,7 @@ bundle exec guard
 
 **Example Guardfile**
 ```
-guard 'rsyncx', 
+guard 'rsync-remote',
         :source => ".", 
         :destination => '/export/home/{username}/tmp', 
         :user => '{user}',

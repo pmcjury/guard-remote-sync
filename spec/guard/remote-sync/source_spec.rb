@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Guard::RsyncX::Source do
+describe Guard::RemoteSync::Source do
 
   describe "#initialize" do
 

@@ -1,19 +1,19 @@
 # encoding: utf-8
 $:.push File.expand_path("../lib", __FILE__)
-require "guard/rsyncx/version"
+require "guard/remote-sync/version"
 
 Gem::Specification.new do |s|
-  s.name           = "guard-rsyncx"
-  s.version        = Guard::RsyncXVersion::VERSION
+  s.name           = "guard-remote-sync"
+  s.version        = Guard::RemoteSyncVersion::VERSION
   s.platform       = Gem::Platform::RUBY
   s.authors        = ["Patrick McJury"]
   s.email          = ["pmcjury@mcjent.com"]
-  s.homepage       = "https://github.com/pmcjury/guard-rsyncx"
-  s.summary        = "Guard gem for Rsync"
-  s.description    = "Guard::RsyncX automatically rsync your files."
+  s.homepage       = "https://github.com/pmcjury/guard-remote-sync"
+  s.summary        = "Guard gem for Remote Syncing through rsync"
+  s.description    = "Guard::RemoteSync to automatically rsync your files."
 
   s.required_rubygems_version = ">= 1.3.6"
-  s.rubyforge_project = "guard-rsynchx"
+  s.rubyforge_project = "guard-remote-synch"
 
   s.add_dependency "guard", ">= 1.1.0"
 

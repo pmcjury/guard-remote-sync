@@ -1,4 +1,4 @@
-guard 'rsyncx', 
+guard 'remote-sync',
 	:source => ".", 
 	:destination => '/export/home/{username}/tmp', 
 	:user => '{user}',
