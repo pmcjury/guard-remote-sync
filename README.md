@@ -1,4 +1,4 @@
-guard-remote-sync
+guard-remote-sync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
 ============
 
 **Usage**
