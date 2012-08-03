@@ -33,7 +33,8 @@ module Guard
           :sync_on_start => false,
           :dry_run => false,
           :cvs_exclude => true,
-          :password_file => nil
+          :password_file => nil,
+          :timeout => 10
       }.merge(options)
 
       @source = Source.new(options[:source])
@@ -48,7 +49,11 @@ module Guard
       throw([:task_has_failed], "Guard::RemoteSync options invalid") unless options_valid?
       UI.info "Guard::RemoteSync started in source directory '#{File.expand_path @source.directory}'"
       Notifier.notify("Guard::RemoteSync is running in directory #{File.expand_path @source.directory}", notifier_options)
-      @command.sync if options[:sync_on_start] && @command.test
+      if @command.test
+        @command.sync if options[:sync_on_start]
+      else
+        throw([:task_has_failed], "Guard::RemoteSync rsync failed, please check your configurations, directories, permissions, and maybe even your ssh details ( set up a public key possibly )")
+      end
 
     end
 

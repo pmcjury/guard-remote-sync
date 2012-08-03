@@ -14,6 +14,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     ENV["GUARD_ENV"] = 'test'
+    $stderr.stub!(:puts)
     @lib_path = Pathname.new(File.expand_path('../../lib/', __FILE__))
   end
 

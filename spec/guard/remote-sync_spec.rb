@@ -52,8 +52,11 @@ describe Guard::RemoteSync do
       end
       it "should call the UI::info with the following message" do
         File.stub!(:expand_path).and_return(source)
+        ::Guard::UI.should_receive(:debug).with("Guard::RemoteSync building rsync options from specified options")
         ::Guard::UI.should_receive(:info).with("Guard::RemoteSync started in source directory '#{source}'")
         guard = described_class.new(nil, {:source => source, :destination => destination})
+        guard.command.stub!(:test).and_return(true)
+        guard.command.stub!(:sync).and_return(true)
         guard.start
       end
 
@@ -75,6 +78,7 @@ describe Guard::RemoteSync do
     describe "#stop" do
       context "when the guard is stopped" do
         it "should output the following message" do
+          ::Guard::UI.should_receive(:debug).with("Guard::RemoteSync building rsync options from specified options")
           ::Guard::UI.should_receive(:info).with("Guard::RemoteSync stopped.")
           guard.stop
         end

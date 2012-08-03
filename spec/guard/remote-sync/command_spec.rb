@@ -164,8 +164,7 @@ describe Guard::RemoteSync::Command do
                     :archive => true,
                     :recursive => true
                 })
-
-        command.should_receive(:`).with("rsync -ar ./source test@192.168.1.1:/remote/destination")
+        Open3.should_receive("popen3").with("rsync -ar ./source test@192.168.1.1:/remote/destination")
         command.sync
       end
     end

@@ -1,7 +1,10 @@
-guard-remote-sync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
+#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
 ============
 
-**Usage**
+## Install
+Please be sure to have [Guard](https://github.com/guard/guard) installed before continue.
+
+##Usage
 ```
 bundle exec guard
 ```

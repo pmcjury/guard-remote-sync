@@ -4,6 +4,26 @@ module Guard
 
       attr_accessor :command, :source, :destination
 
+      CLEAR = "\e[0m"
+      # The start of an ANSI bold sequence.
+      BOLD = "\e[1m"
+      # Set the terminal's foreground ANSI color to black.
+      BLACK = "\e[30m"
+      # Set the terminal's foreground ANSI color to red.
+      RED = "\e[31m"
+      # Set the terminal's foreground ANSI color to green.
+      GREEN = "\e[32m"
+      # Set the terminal's foreground ANSI color to yellow.
+      YELLOW = "\e[33m"
+      # Set the terminal's foreground ANSI color to blue.
+      BLUE = "\e[34m"
+      # Set the terminal's foreground ANSI color to magenta.
+      MAGENTA = "\e[35m"
+      # Set the terminal's foreground ANSI color to cyan.
+      CYAN = "\e[36m"
+      # Set the terminal's foreground ANSI color to white.
+      WHITE = "\e[37m"
+
       def initialize(source, destination, options = {})
         @options = options
         @source = source
@@ -13,28 +33,47 @@ module Guard
 
       def sync
         UI.info "Guard::RemoteSync `#{@command}`"
-        r = `#{@command}`
-        UI.info "Guard::RemoteSync Status : \n #{r}" if @options[:verbose]
+        run_command @command
       end
 
       def test
+        $stderr.puts("\r\e[0m")
+        $stderr.puts "#{BOLD}Testing rsync with a dry run and stats. Verifying the results...#{CLEAR}"
+        opts = @options
         @options[:dry_run] = true
+        @options[:stats] = true
         test_command = build_command
-        @options[:dry_run] = false
-        $stdout.sync = true
-        `#{test_command}`
-        $stdout.sync = false
-        $?.exitstatus
+        @options = opts
+        result = run_command test_command, {:suppress_output => false}
+        $stderr.puts("\r\e[0m")
+        result.to_i == 0
       end
 
       private
 
+      def run_command(cmd, opts = {})
+        options = {:color => CYAN, :suppress_output => false}.merge(opts)
+        $stderr.puts "\r\e[0m" unless options[:suppress_output]
+        exit_value = nil
+        Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+          stdout.read.split("\n").each do |line|
+            $stderr.puts "\t#{options[:color]}#{line}#{CLEAR}" unless options[:suppress_output]
+          end
+          stderr.read.split("\n").each do |line|
+            $stderr.puts "\t#{BOLD}#{RED}ERROR:#{line}#{CLEAR}"
+          end
+          exit_value = wait_thr.value.to_s.split.last
+        end
+        $stderr.puts "\t#{BOLD}#{YELLOW}Result Code #{exit_value}#{CLEAR}"
+        exit_value
+      end
+
       def build_command
         unless @options[:cli_options].nil?
-          UI.info "':cli' option was given so ignoring all other options, and outputting as is..."
+          UI.debug "Guard::RemoteSync ':cli' option was given so ignoring all other options, and outputting as is..." if @options[:verbose]
           command = "#{rsync_command} #{@options[:cli_options]}"
         else
-          UI.debug "building rsync options from specified options"
+          UI.debug "Guard::RemoteSync building rsync options from specified options" if @options[:verbose]
           @command_options = build_options
           @remote_options = check_remote_options
           destination = @remote_options.nil? ? "#{@destination.directory}" : "#{@remote_options}:#{@destination.directory}"
@@ -56,7 +95,7 @@ module Guard
           value = check_boolean_option(o)
           opts.concat "#{value} " unless value.nil?
         end
-        [:include, :include_from, :exclude, :exclude_from, :password_file].each do |o|
+        [:include, :include_from, :exclude, :exclude_from, :password_file, :timeout].each do |o|
           value = check_nil_option(o)
           opts.concat "#{value} " unless value.nil?
         end
