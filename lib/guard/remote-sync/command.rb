@@ -55,7 +55,7 @@ module Guard
         options = {:color => CYAN, :suppress_output => false}.merge(opts)
         $stderr.puts "\r\e[0m" unless options[:suppress_output]
         exit_value = nil
-        Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+        open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
           stdout.read.split("\n").each do |line|
             $stderr.puts "\t#{options[:color]}#{line}#{CLEAR}" unless options[:suppress_output]
           end
