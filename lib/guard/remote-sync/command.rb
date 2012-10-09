@@ -126,9 +126,9 @@ module Guard
         unless @options[:remote_port].nil? && @options[:auth_key].nil?
           raise ":remote_port is an invalid option for local destinations" if !@options[:remote_port].nil? && @remote_options.nil?
           raise ":auth_key is an invalid option for local destinations" if !@options[:auth_key].nil? && @remote_options.nil?
-          value = "-e \"ssh "
-          value << "-i #{@options[:auth_key]}" if !@options[:auth_key].nil?
-          value << "-p #{@options[:remote_port]}" if !@options[:remote_port].nil?
+          value = "-e \"ssh"
+          value << " -i #{@options[:auth_key]}" if !@options[:auth_key].nil?
+          value << " -p #{@options[:remote_port]}" if !@options[:remote_port].nil?
           value << "\""
         else
           value = nil

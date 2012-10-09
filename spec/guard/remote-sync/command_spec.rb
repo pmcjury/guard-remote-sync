@@ -173,6 +173,18 @@ describe Guard::RemoteSync::Command do
         specify { subject.command.should eql "rsync ./source test@192.168.1.1:/remote/destination -e \"ssh -i id_rsa\"" }
       end
 
+      context "auth_key and remote_port is given for remote destination" do
+        let(:command) do
+          Guard::RemoteSync::Command.new(source, destination, {
+              :user => "test",
+              :remote_address => "192.168.1.1",
+              :remote_port => "2222",
+              :auth_key => "id_rsa"
+          })
+        end
+        specify { subject.command.should eql "rsync ./source test@192.168.1.1:/remote/destination -e \"ssh -i id_rsa -p 2222\"" }
+      end
+
       context "ssh_port is specified for local desination" do
         it "should raise an error about local desination" do
           expect { described_class.new(source, destination, {:remote_port => "2222"}) }.to raise_error(StandardError)
