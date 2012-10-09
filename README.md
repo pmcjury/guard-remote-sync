@@ -84,7 +84,9 @@ possible to be more verbose
 :destination => nil                 # the directory to sync to
 :user => nil                        # the user to use if remote syncing to another machine
 :remote_address => nil              # the remote address to the other machine ip|url
+:remote_port => nil                 # the port to use for ssh connetions
 :ssh => false                       # see rsync options : "$ man rsync"
+:auth_key => nil                    # the identity file to use for ssh authentication
 :cli_options => nil                 # used if you want to pass your own rsyn command
 :archive => true                    # see rsync options : "$ man rsync"
 :recursive => true                  # see rsync options : "$ man rsync"
