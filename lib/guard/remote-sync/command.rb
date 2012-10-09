@@ -78,8 +78,10 @@ module Guard
           UI.debug "Guard::RemoteSync building rsync options from specified options" if @options[:verbose]
           @command_options = build_options
           @remote_options = check_remote_options
+          @ssh_options = check_ssh_options
           destination = @remote_options.nil? ? "#{@destination.directory}" : "#{@remote_options}:#{@destination.directory}"
           command = "#{rsync_command} #{@command_options}#{@source.directory} #{destination}"
+          command << " #{@ssh_options}" unless @ssh_options.nil?
         end
         command
       end
@@ -114,6 +116,20 @@ module Guard
           raise "A remote address is required if you specify a user" if !@options[:user].nil? && @options[:remote_address].nil?
           raise "A user is required if you specify a remote address" if @options[:user].nil? && !@options[:remote_address].nil?
           value = "#{@options[:user]}@#{@options[:remote_address]}"
+        else
+          value = nil
+        end
+        value
+      end
+
+      def check_ssh_options
+        unless @options[:remote_port].nil? && @options[:auth_key].nil?
+          raise ":remote_port is an invalid option for local destinations" if !@options[:remote_port].nil? && @remote_options.nil?
+          raise ":auth_key is an invalid option for local destinations" if !@options[:auth_key].nil? && @remote_options.nil?
+          value = "-e \"ssh "
+          value << "-i #{@options[:auth_key]}" if !@options[:auth_key].nil?
+          value << "-p #{@options[:remote_port]}" if !@options[:remote_port].nil?
+          value << "\""
         else
           value = nil
         end
