@@ -15,11 +15,12 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project = "guard-remote-synch"
 
-  s.add_dependency "guard", ">= 1.1.0"
+  s.add_dependency "guard", ">= 1.5.3"
 
-  s.add_development_dependency "bundler"
-  s.add_development_dependency "rspec", ">= 0.9.2.2"
-  s.add_development_dependency "guard-rspec"
+  s.add_development_dependency 'bundler', '~> 1.0'
+  s.add_development_dependency 'rspec', '~> 2.11.0'
+  s.add_development_dependency 'guard-rspec', '~> 2.1.0'
+  s.add_development_dependency 'rspec-mocks', '~> 2.11.3'
 
   s.files = Dir.glob("{lib}/**/*") + %w[LICENSE README.md]
   s.require_path = "lib"

@@ -1,4 +1,4 @@
-#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync)
+#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync) [![Dependency Status](https://gemnasium.com/pmcjury/guard-remote-sync.png)](https://gemnasium.com/pmcjury/guard-remote-sync) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/pmcjury/guard-remote-sync)
 
 ## Install
 
@@ -99,9 +99,9 @@ possible to be more verbose
 :progress => true                   # see rsync options : "$ man rsync"
 :sync_on_start => false             # rsycn when the guard starts instead of waiting for a watcher to trigger guard
 :dry_run => false                   # see rsync options : "$ man rsync"
-:cvs_exclude => true                # see rsync options : "$ man rsync"
+:cvs_exclude => false               # see rsync options : "$ man rsync"
 :password_file => nil               # see rsync options : "$ man rsync"
-:timeout => 10                      # see rsync options : "$ man rsync"
+:timeout => 9999                    # see rsync options : "$ man rsync"
 ```
 
 Development

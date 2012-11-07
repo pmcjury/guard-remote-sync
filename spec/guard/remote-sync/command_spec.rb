@@ -4,6 +4,7 @@ describe Guard::RemoteSync::Command do
 
   before(:each) do
     File.stub!(:directory?).and_return(true)
+    ::Guard::UI.stub!(:info) # stub the UI so we don't see it in our tests
   end
 
   describe "#initialize" do

@@ -7,5 +7,5 @@ guard 'remote-sync',
 	:cli => "--color", 
 	:sync_on_start => true do
   
-  watch(%r{^.+\.(js|xml|php|class|config)$})
+  watch(%r{^.+\.(.*)$})
 end

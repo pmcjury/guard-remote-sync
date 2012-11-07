@@ -4,6 +4,7 @@ describe Guard::RemoteSync do
 
   before(:each) do
     File.stub!(:directory?).and_return(true)
+    ::Guard::UI.stub!(:info)
   end
 
   describe "#initialize" do
@@ -52,6 +53,7 @@ describe Guard::RemoteSync do
       end
       it "should call the UI::info with the following message" do
         File.stub!(:expand_path).and_return(source)
+        Guard::Notifier.turn_off
         ::Guard::UI.should_receive(:debug).with("Guard::RemoteSync building rsync options from specified options")
         ::Guard::UI.should_receive(:info).with("Guard::RemoteSync started in source directory '#{source}'")
         guard = described_class.new(nil, {:source => source, :destination => destination})

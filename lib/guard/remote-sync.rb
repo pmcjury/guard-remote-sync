@@ -34,9 +34,9 @@ module Guard
           :progress => true,
           :sync_on_start => false,
           :dry_run => false,
-          :cvs_exclude => true,
+          :cvs_exclude => false,
           :password_file => nil,
-          :timeout => 10
+          :timeout => 9999
       }.merge(options)
 
       @source = Source.new(options[:source])
