@@ -57,6 +57,7 @@ module Guard
         options = {:color => CYAN, :suppress_output => false}.merge(opts)
         $stderr.puts "\r\e[0m" unless options[:suppress_output]
         exit_value = nil
+        wait_thr_nil = false
         Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
           stdout.read.split("\n").each do |line|
             $stderr.puts "\t#{options[:color]}#{line}#{CLEAR}" unless options[:suppress_output]
@@ -64,10 +65,13 @@ module Guard
           stderr.read.split("\n").each do |line|
             $stderr.puts "\t#{BOLD}#{RED}ERROR:#{line}#{CLEAR}"
           end
-          exit_value = wait_thr.value.to_s.split.last
+          if !wait_thr.nil?
+            wait_thr_nil = true
+            exit_value = wait_thr.value.to_s.split.last
+          end
         end
         $stderr.puts "\t#{BOLD}#{YELLOW}Result Code #{exit_value}#{CLEAR}"
-        exit_value
+        wait_thr_nil ? exit_value : 0
       end
 
       def build_command
