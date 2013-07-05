@@ -36,7 +36,11 @@ module Guard
           :dry_run => false,
           :cvs_exclude => false,
           :password_file => nil,
-          :timeout => 9999
+          :timeout => 9999,
+          :notify_on_sync_complete => false,
+          :notify_success_icon => :success,
+          :notify_failure_icon => :failed,
+          :notify_title => 'Guard::RemoteSync'
       }.merge(options)
 
       @source = Source.new(options[:source])
