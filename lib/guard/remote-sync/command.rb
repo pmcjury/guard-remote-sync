@@ -70,9 +70,8 @@ module Guard
             exit_value = wait_thr.value.to_s.split.last
           end
         end
-        exit_value = wait_thr_nil ? exit_value : 0
         $stderr.puts "\t#{BOLD}#{YELLOW}Result Code #{exit_value}#{CLEAR}"
-        exit_value
+        wait_thr_nil ? exit_value : 0
       end
 
       def build_command
