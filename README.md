@@ -1,4 +1,4 @@
-#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync) [![Dependency Status](https://gemnasium.com/pmcjury/guard-remote-sync.png)](https://gemnasium.com/pmcjury/guard-remote-sync) [![Code Climate](https://codeclimate.com/github/pmcjury/guard-remote-sync.png)](https://codeclimate.com/github/pmcjury/guard-remote-sync)
+#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync) [![Dependency Status](https://gemnasium.com/pmcjury/guard-remote-sync.png)](https://gemnasium.com/pmcjury/guard-remote-sync) [![Code Climate](https://codeclimate.com/github/pmcjury/guard-remote-sync.png)](https://codeclimate.com/github/pmcjury/guard-remote-sync) [![Gem Version](https://badge.fury.io/rb/guard-remote-sync.png)](http://badge.fury.io/rb/guard-remote-sync)
 
 ## Install
 
