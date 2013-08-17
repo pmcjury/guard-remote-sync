@@ -27,15 +27,22 @@ module Guard
       WHITE = "\e[37m"
 
       def initialize(source, destination, options = {})
-        @options = options
-        @source = source
-        @destination = destination
-        @command = build_command
+        @options              = options
+        @source               = source
+        @destination          = destination
+        @command              = build_command
+        @notify               = options[:notify_on_sync_complete]
       end
 
       def sync
         UI.info "Guard::RemoteSync `#{@command}`"
-        run_command @command
+        return_code = run_command @command
+        if return_code.eql? '0'
+          Notifier.notify("Result Code #{return_code}", :title => @options[:notify_title], :image => @options[:notify_success_icon]) if @notify
+        else
+          Notifier.notify("Result Code #{return_code}", :title => @options[:notify_title], :image => @options[:notify_failure_icon]) if @notify
+        end
+        return_code
       end
 
       def test
