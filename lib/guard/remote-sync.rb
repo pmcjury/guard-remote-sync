@@ -1,8 +1,8 @@
 require 'guard'
-require 'guard/guard'
+require 'guard/plugin'
 
 module Guard
-  class RemoteSync < Guard
+  class RemoteSync < Plugin
 
     autoload :Command, 'guard/remote-sync/command'
     autoload :Source, 'guard/remote-sync/source'
@@ -12,7 +12,7 @@ module Guard
     # Initialize a Guard.
     # @param [Array<Guard::Watcher>] watchers the Guard file watchers
     # @param [Hash] options the custom Guard options
-    def initialize(watchers = [], options = {})
+    def initialize(options = {})
       super
       @options = {
           :source => nil,
