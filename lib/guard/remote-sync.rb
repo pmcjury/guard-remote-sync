@@ -1,5 +1,5 @@
 require 'guard'
-require 'guard/plugin'
+require 'guard/compat/plugin'
 
 module Guard
   class RemoteSync < Plugin
