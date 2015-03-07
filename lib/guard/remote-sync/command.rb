@@ -34,7 +34,7 @@ module Guard
       end
 
       def sync
-        UI.info "Guard::RemoteSync `#{@command}`"
+        Compat::UI.info "Guard::RemoteSync `#{@command}`"
         run_command @command
       end
 
@@ -76,10 +76,10 @@ module Guard
 
       def build_command
         unless @options[:cli_options].nil?
-          UI.debug "Guard::RemoteSync ':cli' option was given so ignoring all other options, and outputting as is..." if @options[:verbose]
+          Compat::UI.debug "Guard::RemoteSync ':cli' option was given so ignoring all other options, and outputting as is..." if @options[:verbose]
           command = "#{rsync_command} #{@options[:cli_options]}"
         else
-          UI.debug "Guard::RemoteSync building rsync options from specified options" if @options[:verbose]
+          Compat::UI.debug "Guard::RemoteSync building rsync options from specified options" if @options[:verbose]
           @command_options = build_options
           @remote_options = check_remote_options
           @ssh_options = check_ssh_options

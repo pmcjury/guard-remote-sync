@@ -3,7 +3,7 @@ require 'rspec'
 require 'guard/remote-sync'
 require 'guard/remote-sync/command'
 require 'guard/remote-sync/source'
-
+require 'guard/compat/test/helper'
 include RSpec::Matchers
 
 RSpec.configure do |config|
