@@ -1,6 +1,14 @@
-#Guard::RemoteSync [![Build Status](https://secure.travis-ci.org/pmcjury/guard-remote-sync.png)](http://travis-ci.org/pmcjury/guard-remote-sync) [![Dependency Status](https://gemnasium.com/pmcjury/guard-remote-sync.png)](https://gemnasium.com/pmcjury/guard-remote-sync) [![Code Climate](https://codeclimate.com/github/pmcjury/guard-remote-sync.png)](https://codeclimate.com/github/pmcjury/guard-remote-sync) [![Gem Version](https://badge.fury.io/rb/guard-remote-sync.png)](http://badge.fury.io/rb/guard-remote-sync)
+#Guard::RemoteSync [![Build Status](https://travis-ci.org/pmcjury/guard-remote-sync.svg?branch=master)](https://travis-ci.org/pmcjury/guard-remote-sync) [![Dependency Status](https://gemnasium.com/pmcjury/guard-remote-sync.png)](https://gemnasium.com/pmcjury/guard-remote-sync) [![Code Climate](https://codeclimate.com/github/pmcjury/guard-remote-sync.png)](https://codeclimate.com/github/pmcjury/guard-remote-sync) [![Gem Version](https://badge.fury.io/rb/guard-remote-sync.svg)](http://badge.fury.io/rb/guard-remote-sync)
 
 ## Install
+
+### Requirements
+
+The gem has been update to be compatable with guard ```"guard", "~> 2.12.4"``` and the ruby version below. 
+
+  - 1.9.3
+  - 2.0.0
+  - 2.1.2
 
 Please be sure to have [Guard](https://github.com/guard/guard) installed before continuing.
 
@@ -9,6 +17,8 @@ Please be sure to have the rsync command in your path.
 It's recommended that you set up a ssh key if you're going to do remote syncing. 
 Alterantively your can use a password file as per rsync default option --password-file=FILE, the drawback with this is you might commit your information to the repo, and that ain't no good.
 Lastly, you can just type in your password everytime, but that's too much work. Add a ssh key! 
+
+### Installation
 
 Install the gem:
 
