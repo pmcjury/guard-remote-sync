@@ -1,8 +1,8 @@
 require 'guard'
-require 'guard/guard'
+require 'guard/compat/plugin'
 
 module Guard
-  class RemoteSync < Guard
+  class RemoteSync < Plugin
 
     autoload :Command, 'guard/remote-sync/command'
     autoload :Source, 'guard/remote-sync/source'
@@ -10,9 +10,8 @@ module Guard
     attr_accessor :command
 
     # Initialize a Guard.
-    # @param [Array<Guard::Watcher>] watchers the Guard file watchers
     # @param [Hash] options the custom Guard options
-    def initialize(watchers = [], options = {})
+    def initialize(options = {})
       super
       @options = {
           :source => nil,
@@ -49,8 +48,8 @@ module Guard
     # @raise [:task_has_failed] when start has failed
     def start
       throw([:task_has_failed], "Guard::RemoteSync options invalid") unless options_valid?
-      UI.info "Guard::RemoteSync started in source directory '#{File.expand_path @source.directory}'"
-      Notifier.notify("Guard::RemoteSync is running in directory #{File.expand_path @source.directory}", notifier_options)
+      Guard::Compat::UI.info "Guard::RemoteSync started in source directory '#{File.expand_path @source.directory}'"
+      Guard::Compat::UI.notify("Guard::RemoteSync is running in directory #{File.expand_path @source.directory}", notifier_options)
       if @command.test
         @command.sync if options[:sync_on_start]
       else
@@ -63,15 +62,15 @@ module Guard
     # @raise [:task_has_failed] when stop has failed
 
     def stop
-      UI.info "Guard::RemoteSync stopped."
-      Notifier.notify("Guard::RemoteSync stopped.",notifier_options)
+      Guard::Compat::UI.info "Guard::RemoteSync stopped."
+      Guard::Compat::UI.notify("Guard::RemoteSync stopped.",notifier_options)
     end
 
     # Called when `reload|r|z + enter` is pressed.
     # This method should be mainly used for "reload" (really!) actions like reloading passenger/spork/bundler/...
     # @raise [:task_has_failed] when reload has failed
     def reload
-      Notifier.notify("Manual Guard::RemoteSync synchronize  #{File.expand_path @source.directory} to #{@destination.directory}",notifier_options)
+      Guard::Compat::UI.notify("Manual Guard::RemoteSync synchronize  #{File.expand_path @source.directory} to #{@destination.directory}",notifier_options)
       @command.sync
     end
 
@@ -79,7 +78,7 @@ module Guard
     # This method should be principally used for long action like running all specs/tests/...
     # @raise [:task_has_failed] when run_all has failed
     def run_all
-      Notifier.notify("Manual Guard::RemoteSync synchronize  #{@source.directory} to #{@destination.directory}",notifier_options)
+      Guard::Compat::UI.notify("Manual Guard::RemoteSync synchronize  #{@source.directory} to #{@destination.directory}",notifier_options)
       @command.sync
     end
 
@@ -87,7 +86,7 @@ module Guard
     # @param [Array<String>] paths the changes files or paths
     # @raise [:task_has_failed] when run_on_change has failed
     def run_on_changes(paths)
-      #paths.each do |p| ::Guard::UI.info("Files effect : #{p}")  end
+      #paths.each do |p| ::Guard::Guard::Compat::UI.info("Files effect : #{p}")  end
       @command.sync
     end
 
@@ -110,11 +109,11 @@ module Guard
     def options_valid?
       valid = true
       if options[:source].nil? && options[:cli_options].nil?
-        UI.error("Guard::RemoteSync a source directory is required")
+        Guard::Compat::UI.error("Guard::RemoteSync a source directory is required")
         valid = false
       end
       if options[:destination].nil? && options[:cli_options].nil?
-        UI.error("Guard::RemoteSync a source directory is required")
+        Guard::Compat::UI.error("Guard::RemoteSync a source directory is required")
         valid = false
       end
       valid

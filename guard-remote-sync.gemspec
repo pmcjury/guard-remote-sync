@@ -15,7 +15,8 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project = "guard-remote-synch"
 
-  s.add_dependency "guard", ">= 1.5.3"
+  s.add_dependency "guard", "~> 2.12.4"
+  s.add_dependency('guard-compat', '~> 1.0')
 
   s.add_development_dependency 'bundler', '~> 1.0'
   s.add_development_dependency 'rake'
