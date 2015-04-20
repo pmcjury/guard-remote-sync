@@ -79,7 +79,7 @@ end
 
 ### Using your own rsync command. This bypasses all validations, etc.
 ```ruby
-guard 'remote-sync', :cli_options => 'rsync -Carv . user@company.com:/export/home/user' do
+guard 'remote-sync', :cli_options => '-Carv . user@company.com:/export/home/user' do
         # ...
 end
 ```
