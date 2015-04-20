@@ -72,6 +72,11 @@ module Guard
           end
         end
         $stderr.puts "\t#{BOLD}#{YELLOW}Result Code #{exit_value}#{CLEAR}"
+        if exit_value.to_i != 0
+          Guard::Compat::UI.notify('Guard::RemoteSync failed',
+                                   :title => 'Guard::RemoteSync',
+                                   :type  => :failed)
+        end
         !wait_thread.nil? ? exit_value : nil
       end
 
